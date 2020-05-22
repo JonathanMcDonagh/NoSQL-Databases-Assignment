@@ -1,0 +1,84 @@
+/////////////
+/* Reading */
+/////////////
+db.customer.find({
+	customer_ID:1,
+	}).pretty();
+
+db.Waiter.find({
+	Waiter_ID:1,
+	}).pretty();
+
+db.menu.find({
+	item_ID:1,
+	}).pretty();
+
+db.menu.find({
+	items_ID:1,
+	}).pretty();
+
+db.Order.find({
+	Order_ID: 1,
+	}).pretty();
+
+//////////////////////////////////////////
+/* Updating Order for customer 5 (Nick) */
+//////////////////////////////////////////
+db.customer.update({
+	customer_ID:5},
+	{
+	$set: {
+	order: 'Burger meal and desert and pint'
+	}
+	});
+
+
+db.Order.update({
+	Order_ID:5},
+	{
+	$set: {
+	Order_ID: [
+		1,4,6,],
+	Total_Price: 23,
+	}
+	});
+
+
+///////////////////////////////////
+/* Removing item 5 Chicken curry */
+///////////////////////////////////
+db.menu.remove({
+	item_ID:5,
+	});
+
+
+//////////////
+/* Queries */
+/////////////
+db.Order.find({item_ID:2,}).pretty();
+
+db.customer.find().pretty();
+db.Waiter.find().pretty();
+db.menu.find().pretty();
+db.Order.find().pretty();
+
+db.Order.aggregate([{ $unwind : "$item_ID" }])
+
+db.customer.aggregate([{ $project : { customer_name: 1, order: 1} }]).pretty()
+
+db.menu.aggregate([{
+	$project : {
+		menuTotal:{$sum:"$Price"}
+	}
+	}])
+
+db.customer.find().count();
+
+db.Waiter.find().count();
+
+db.menu.find({"Price":{$lt:10}}).pretty();
+
+db.menu.find({"Price":{$gt:10}}).pretty();
+
+
+
